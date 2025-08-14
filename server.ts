@@ -1,7 +1,17 @@
-const fastify = require("fastify");
-const crypto = require("crypto");
+import fastify from "fastify";
+import crypto from "node:crypto";
 
-const server = fastify();
+const server = fastify({
+  logger: {
+    transport: {
+      target: "pino-pretty",
+      options: {
+        translateTime: "HH:MM:ss Z",
+        ignore: "pid,hostname",
+      },
+    },
+  },
+});
 
 const courses = [
   {
@@ -29,7 +39,11 @@ server.get("/courses", () => {
 });
 
 server.get("/courses/:id", (request, reply) => {
-  const { id } = request.params;
+  type Params = {
+    id: string;
+  };
+  const params = request.params as Params;
+  const id = params.id;
   const course = courses.find((course) => course.id === id);
 
   if (course) {
@@ -40,9 +54,15 @@ server.get("/courses/:id", (request, reply) => {
 });
 
 server.post("/courses", (request, reply) => {
+  type CourseBody = {
+    title: string;
+    description: string;
+  };
+
   const courseId = crypto.randomUUID();
-  const courseTitle = request.body.title;
-  const coruseDescription = request.body.description;
+  const body = request.body as CourseBody;
+  const courseTitle = body.title;
+  const coruseDescription = body.description;
 
   if (!courseTitle) {
     return reply.status(400).send({ message: "Course title is required" });
@@ -56,7 +76,7 @@ server.post("/courses", (request, reply) => {
   courses.push({
     id: courseId,
     title: courseTitle,
-    description: "Learn the fundamentals of machine learning using Python",
+    description: coruseDescription,
   });
   return reply.status(201).send({ courses });
 });
