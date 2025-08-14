@@ -10,3 +10,13 @@ Content-Type: application/json
 GET http://localhost:3000/courses
 ###
 GET http://localhost:3000/courses/1
+###
+DELETE http://localhost:3000/courses/1
+###
+PATCH  http://localhost:3000/courses/1
+Content-Type: application/json
+
+{
+  "title": "Course of sofware engeniering",
+  "description": "this is a course of sofware engeniering"
+}

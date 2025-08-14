@@ -81,6 +81,52 @@ server.post("/courses", (request, reply) => {
   return reply.status(201).send({ courses });
 });
 
+server.delete("/courses/:id", (request, reply) => {
+  type Params = {
+    id: string;
+  };
+
+  const params = request.params as Params;
+  const id = params.id;
+  const courseIndex = courses.findIndex((course) => course.id === id);
+
+  if (courseIndex === -1) {
+    return reply.status(404).send({ message: "Course not foun" });
+  }
+
+  courses.splice(courseIndex, 1);
+  return reply.status(201).send({ message: "Course deleted" });
+});
+
+server.patch("/courses/:id", (request, reply) => {
+  type Params = {
+    id: string;
+    title?: string;
+    description?: string;
+  };
+
+  const params = request.params as Params;
+  const body = request.body as Params;
+  const courseTitle = body.title;
+  const courseDescription = body.description;
+  const id = params.id;
+
+  const courseIndex = courses.findIndex((course) => course.id === id);
+
+  if (courseIndex === -1) {
+    return reply.status(404).send({ message: "Course not found" });
+  }
+
+  if (courseTitle) {
+    courses[courseIndex].title = courseTitle;
+  }
+
+  if (courseDescription) {
+    courses[courseIndex].description = courseDescription;
+  }
+  return reply.status(201).send({ courses });
+});
+
 server.listen({ port: 3000 }).then(() => {
   console.log("Server listening on http://localhost:3000");
 });
