@@ -11,5 +11,9 @@
   "description": "",
   "dependencies": {
     "fastify": "^5.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.1",
+    "typescript": "^5.9.2"
   }
 }

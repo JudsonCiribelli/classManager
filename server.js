@@ -28,11 +28,34 @@ server.get("/courses", () => {
   return { courses };
 });
 
+server.get("/courses/:id", (request, reply) => {
+  const { id } = request.params;
+  const course = courses.find((course) => course.id === id);
+
+  if (course) {
+    return { course };
+  }
+
+  return reply.status(404).send({ message: "Course not found" });
+});
+
 server.post("/courses", (request, reply) => {
   const courseId = crypto.randomUUID();
+  const courseTitle = request.body.title;
+  const coruseDescription = request.body.description;
+
+  if (!courseTitle) {
+    return reply.status(400).send({ message: "Course title is required" });
+  }
+
+  if (!coruseDescription) {
+    return reply
+      .status(400)
+      .send({ message: "Course Description is required" });
+  }
   courses.push({
     id: courseId,
-    title: "Machinne Learning Basics Using Python",
+    title: courseTitle,
     description: "Learn the fundamentals of machine learning using Python",
   });
   return reply.status(201).send({ courses });
