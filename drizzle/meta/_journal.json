@@ -15,6 +15,13 @@
       "when": 1755194154055,
       "tag": "0001_light_obadiah_stane",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1755275347380,
+      "tag": "0002_illegal_leech",
+      "breakpoints": true
     }
   ]
 }
