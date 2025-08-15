@@ -1,5 +1,8 @@
 import fastify from "fastify";
 import crypto from "node:crypto";
+import { db } from "./src/database/client.ts";
+import { courses } from "./src/database/schema.ts";
+import { eq } from "drizzle-orm";
 
 const server = fastify({
   logger: {
@@ -13,53 +16,32 @@ const server = fastify({
   },
 });
 
-const courses = [
-  {
-    id: "1",
-    title: "Introduction to JavaScript",
-    description:
-      "Learn the basics of JavaScript, the programming language of the web.",
-  },
-  {
-    id: "2",
-    title: "Advanced Node.js",
-    description:
-      "Dive deeper into Node.js, exploring its core modules and asynchronous programming.",
-  },
-  {
-    id: "3",
-    title: "Web Development with React",
-    description:
-      "Build dynamic user interfaces using React, a popular JavaScript library.",
-  },
-];
-
-server.get("/courses", () => {
-  return { courses };
+server.get("/courses", async (request, reply) => {
+  const result = await db.select().from(courses);
+  return reply.send({ courses: result });
 });
 
-server.get("/courses/:id", (request, reply) => {
+server.get("/courses/:id", async (request, reply) => {
   type Params = {
     id: string;
   };
   const params = request.params as Params;
   const id = params.id;
-  const course = courses.find((course) => course.id === id);
+  const result = await db.select().from(courses).where(eq(courses.id, id));
 
-  if (course) {
-    return { course };
+  if (result.length > 0) {
+    return { course: result[0] };
   }
 
   return reply.status(404).send({ message: "Course not found" });
 });
 
-server.post("/courses", (request, reply) => {
+server.post("/courses", async (request, reply) => {
   type CourseBody = {
     title: string;
     description: string;
   };
 
-  const courseId = crypto.randomUUID();
   const body = request.body as CourseBody;
   const courseTitle = body.title;
   const coruseDescription = body.description;
@@ -73,32 +55,36 @@ server.post("/courses", (request, reply) => {
       .status(400)
       .send({ message: "Course Description is required" });
   }
-  courses.push({
-    id: courseId,
-    title: courseTitle,
-    description: coruseDescription,
-  });
-  return reply.status(201).send({ courses });
+
+  const result = await db
+    .insert(courses)
+    .values({
+      title: courseTitle,
+      description: coruseDescription,
+    })
+    .returning();
+
+  return reply.status(201).send({ course: result });
 });
 
-server.delete("/courses/:id", (request, reply) => {
+server.delete("/courses/:id", async (request, reply) => {
   type Params = {
     id: string;
   };
 
   const params = request.params as Params;
   const id = params.id;
-  const courseIndex = courses.findIndex((course) => course.id === id);
+  const result = await db.select().from(courses).where(eq(courses.id, id));
 
-  if (courseIndex === -1) {
+  if (!result) {
     return reply.status(404).send({ message: "Course not foun" });
   }
+  await db.delete(courses).where(eq(courses.id, id));
 
-  courses.splice(courseIndex, 1);
   return reply.status(201).send({ message: "Course deleted" });
 });
 
-server.patch("/courses/:id", (request, reply) => {
+server.patch("/courses/:id", async (request, reply) => {
   type Params = {
     id: string;
     title?: string;
@@ -111,19 +97,28 @@ server.patch("/courses/:id", (request, reply) => {
   const courseDescription = body.description;
   const id = params.id;
 
-  const courseIndex = courses.findIndex((course) => course.id === id);
+  const course = await db.select().from(courses).where(eq(courses.id, id));
 
-  if (courseIndex === -1) {
+  if (!course) {
     return reply.status(404).send({ message: "Course not found" });
   }
 
   if (courseTitle) {
-    courses[courseIndex].title = courseTitle;
+    course[0].title = courseTitle;
   }
 
   if (courseDescription) {
-    courses[courseIndex].description = courseDescription;
+    course[0].description = courseDescription;
   }
+
+  await db
+    .update(courses)
+    .set({
+      title: course[0].title,
+      description: course[0].description,
+    })
+    .where(eq(courses.id, id));
+
   return reply.status(201).send({ courses });
 });
 

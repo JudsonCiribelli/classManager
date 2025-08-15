@@ -9,11 +9,11 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/courses
 ###
-GET http://localhost:3000/courses/1
+GET http://localhost:3000/courses/d126a2c4-84fe-463f-906d-3e03df396ed8
 ###
-DELETE http://localhost:3000/courses/1
+DELETE http://localhost:3000/courses/66834c18-9544-4857-96bd-0ba9c29409e5
 ###
-PATCH  http://localhost:3000/courses/1
+PATCH  http://localhost:3000/courses/56251c33-2188-400a-a27d-1832251ed40c
 Content-Type: application/json
 
 {
