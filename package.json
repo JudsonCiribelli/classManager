@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch --experimental-strip-types server.ts",
+    "dev": "node --env-file .env --watch --experimental-strip-types server.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio"
