@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360">
+  <style>
+    .box { fill:#f8f9fa; stroke:#2d3748; stroke-width:1.5; rx:6; ry:6 }
+    .text { font-family: Inter, Arial, sans-serif; font-size:14px; fill:#0f172a }
+    .small { font-size:12px; fill:#334155 }
+    .arrow { stroke:#0f172a; stroke-width:1.6; fill:none; marker-end:url(#arrowhead) }
+    .dashed { stroke-dasharray:6 4 }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0f172a" />
+    </marker>
+  </defs>
+
+  <!-- Boxes -->
+  <rect x="40" y="40" width="140" height="48" class="box"/>
+  <text x="110" y="72" text-anchor="middle" class="text">Client</text>
+
+  <rect x="240" y="30" width="180" height="64" class="box"/>
+  <text x="330" y="62" text-anchor="middle" class="text">Fastify Server</text>
+
+  <rect x="480" y="20" width="140" height="64" class="box"/>
+  <text x="550" y="52" text-anchor="middle" class="text">Router</text>
+
+  <rect x="660" y="20" width="180" height="56" class="box"/>
+  <text x="750" y="52" text-anchor="middle" class="text">Validação / Zod</text>
+
+  <rect x="240" y="140" width="180" height="56" class="box"/>
+  <text x="330" y="172" text-anchor="middle" class="text">Drizzle ORM</text>
+
+  <rect x="520" y="140" width="180" height="56" class="box"/>
+  <text x="610" y="172" text-anchor="middle" class="text">PostgreSQL</text>
+
+  <rect x="40" y="140" width="140" height="56" class="box"/>
+  <text x="110" y="172" text-anchor="middle" class="text">/docs (dev)</text>
+  <text x="110" y="190" text-anchor="middle" class="small">Swagger / API Reference</text>
+
+  <!-- Arrows -->
+  <path class="arrow" d="M180 64 L240 64" />
+  <path class="arrow" d="M420 64 L480 64" />
+  <path class="arrow" d="M620 64 L660 64" />
+  <path class="arrow" d="M740 76 L740 140 L520 140" />
+
+  <path class="arrow" d="M340 196 L340 200 L340 200 L340 200 L420 200" />
+  <path class="arrow" d="M420 168 L520 168" />
+
+  <!-- From Client directly to docs (dashed) -->
+  <path class="arrow dashed" d="M110 88 L110 140" />
+  <path class="arrow dashed" d="M180 168 L240 168" />
+
+  <!-- Response arrow -->
+  <path class="arrow" d="M520 140 L420 140 L420 104 L240 104 L240 88 L180 88 L140 88" />
+
+  <!-- Labels -->
+  <text x="360" y="100" class="small">request → route → validation → DB ops</text>
+</svg>
