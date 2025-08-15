@@ -30,22 +30,24 @@ const server = fastify({
 server.setValidatorCompiler(validatorCompiler);
 server.setSerializerCompiler(serializerCompiler);
 
-server.register(fastifySwagger, {
-  openapi: {
-    info: {
-      title: "Class Manager API",
-      version: "1.0.0",
+if (process.env.NODE_ENV === "development") {
+  server.register(fastifySwagger, {
+    openapi: {
+      info: {
+        title: "Class Manager API",
+        version: "1.0.0",
+      },
     },
-  },
-  transform: jsonSchemaTransform,
-});
+    transform: jsonSchemaTransform,
+  });
 
-server.register(scalarAPIReference, {
-  routePrefix: "/docs",
-  configuration: {
-    theme: "kepler",
-  },
-});
+  server.register(scalarAPIReference, {
+    routePrefix: "/docs",
+    configuration: {
+      theme: "kepler",
+    },
+  });
+}
 
 server.register(getCourseRoute);
 server.register(getCourseByIdRoute);
