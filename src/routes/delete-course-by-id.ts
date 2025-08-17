@@ -32,12 +32,12 @@ export const deleteCourseByIdRoute: FastifyPluginAsyncZod = async (server) => {
       const id = params.id;
       const result = await db.select().from(courses).where(eq(courses.id, id));
 
-      if (!result) {
-        return reply.status(404).send({ message: "Course not foun" });
-      }
       await db.delete(courses).where(eq(courses.id, id));
 
-      return reply.status(200).send({ message: "Course deleted" });
+      if (result.length > 0) {
+        return reply.status(200).send({ message: "Course deleted" });
+      }
+      return reply.status(404).send({ message: "Course not foun" });
     }
   );
 };

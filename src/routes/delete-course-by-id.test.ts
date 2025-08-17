@@ -15,3 +15,13 @@ test("delete a course by id", async () => {
     message: "Course deleted",
   });
 });
+
+test("return 404 for non existing course", async () => {
+  await server.ready();
+
+  const response = await request(server.server).delete(
+    `/courses/bb5aba42-c003-1b2c-a123-1e2345b6c7e8`
+  );
+
+  expect(response.status).toBe(404);
+});
