@@ -2,8 +2,8 @@ POST http://localhost:3000/courses
 Content-Type: application/json
 
 {
-  "title": "Course of Ruby!",
-  "description": "This is a course of Ruby!"
+  "title": "",
+  "description": ""
 }
 
 ###
