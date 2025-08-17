@@ -16,7 +16,7 @@ export const deleteCourseByIdRoute: FastifyPluginAsyncZod = async (server) => {
           id: z.uuid(),
         }),
         response: {
-          201: z
+          200: z
             .object({ message: z.string() })
             .describe("Course deletion response")
             .describe("Course deleted successfully"),
@@ -37,7 +37,7 @@ export const deleteCourseByIdRoute: FastifyPluginAsyncZod = async (server) => {
       }
       await db.delete(courses).where(eq(courses.id, id));
 
-      return reply.status(201).send({ message: "Course deleted" });
+      return reply.status(200).send({ message: "Course deleted" });
     }
   );
 };
