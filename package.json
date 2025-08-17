@@ -5,8 +5,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "node --env-file .env --watch --experimental-strip-types server.ts",
-    "test": "vitest run",
+    "dev": "node --env-file .env --watch --experimental-strip-types src/server.ts",
+    "test": "dotenv -e .env vitest run",
     "db:seed": "node --env-file .env --experimental-strip-types src/database/seed.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
@@ -29,7 +29,10 @@
   "devDependencies": {
     "@faker-js/faker": "^9.9.0",
     "@types/node": "^24.2.1",
+    "@types/supertest": "^6.0.3",
+    "dotenv-cli": "^10.0.0",
     "drizzle-kit": "^0.31.4",
+    "supertest": "^7.1.4",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   }

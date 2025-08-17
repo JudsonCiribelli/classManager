@@ -1,19 +1,18 @@
 import fastify from "fastify";
 import { fastifySwagger } from "@fastify/swagger";
-
 import {
   validatorCompiler,
   serializerCompiler,
   type ZodTypeProvider,
   jsonSchemaTransform,
 } from "fastify-type-provider-zod";
-import { createCourseRoute } from "./src/routes/create-course.ts";
-import { getCourseRoute } from "./src/routes/get-courses.ts";
-import { getCourseByIdRoute } from "./src/routes/get-course-by-id.ts";
-import { deleteCourseByIdRoute } from "./src/routes/delete-course-by-id.ts";
+import { createCourseRoute } from "./routes/create-course.ts";
+import { getCourseRoute } from "./routes/get-courses.ts";
+import { getCourseByIdRoute } from "./routes/get-course-by-id.ts";
+import { deleteCourseByIdRoute } from "./routes/delete-course-by-id.ts";
 import scalarAPIReference from "@scalar/fastify-api-reference";
 
-import { updateCourseByIdRoute } from "./src/routes/update-course-by-id.ts";
+import { updateCourseByIdRoute } from "./routes/update-course-by-id.ts";
 
 const server = fastify({
   logger: {
@@ -55,6 +54,4 @@ server.register(createCourseRoute);
 server.register(deleteCourseByIdRoute);
 server.register(updateCourseByIdRoute);
 
-server.listen({ port: 3000 }).then(() => {
-  console.log("Server listening on http://localhost:3000");
-});
+export { server };
