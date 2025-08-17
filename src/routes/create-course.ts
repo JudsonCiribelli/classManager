@@ -14,7 +14,6 @@ export const createCourseRoute: FastifyPluginAsyncZod = async (server) => {
           "Creates a new course with the provided title and description.",
         body: z.object({
           title: z.string(),
-          description: z.string(),
         }),
         response: {
           201: z
@@ -25,13 +24,11 @@ export const createCourseRoute: FastifyPluginAsyncZod = async (server) => {
     },
     async (request, reply) => {
       const courseTitle = request.body.title;
-      const coruseDescription = request.body.description;
 
       const result = await db
         .insert(courses)
         .values({
           title: courseTitle,
-          description: coruseDescription,
         })
         .returning();
 

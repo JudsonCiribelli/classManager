@@ -11,9 +11,8 @@ test("create a course", async () => {
     .set("Content-Type", "application/json")
     .send({
       title: faker.lorem.words(4),
-      description: faker.lorem.paragraphs(2),
     });
-  console.log(response.body);
+
   expect(response.status).toBe(201);
   expect(response.body).toEqual({
     courseId: expect.any(String),
