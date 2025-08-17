@@ -22,7 +22,6 @@ export const getCourseRoute: FastifyPluginAsyncZod = async (server) => {
               z.object({
                 id: z.uuid(),
                 title: z.string(),
-                description: z.string(),
                 enrollmentsCount: z.number(),
               })
             ),
@@ -45,7 +44,6 @@ export const getCourseRoute: FastifyPluginAsyncZod = async (server) => {
           .select({
             id: courses.id,
             title: courses.title,
-            description: courses.description,
             enrollmentsCount: count(enrollments.id),
           })
           .from(courses)
