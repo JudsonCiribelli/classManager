@@ -15,7 +15,7 @@ export const users = pgTable("users", {
 export const courses = pgTable("courses", {
   id: uuid().primaryKey().defaultRandom(),
   title: text().notNull().unique(),
-  description: text().notNull(),
+  description: text(),
 });
 
 export const enrollments = pgTable(
