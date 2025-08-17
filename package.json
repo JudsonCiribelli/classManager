@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "node --env-file .env --watch --experimental-strip-types src/server.ts",
-    "test": "dotenv -e .env vitest run",
+    "test": "dotenv -e .env.test vitest run",
+    "pretest": "dotenv -e .env.test drizzle-kit migrate",
     "db:seed": "node --env-file .env --experimental-strip-types src/database/seed.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
