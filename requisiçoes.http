@@ -18,5 +18,5 @@ PATCH  http://localhost:3000/courses/2287f75d-b438-47ff-b29a-409f332b5ffe
 Content-Type: application/json
 
 {
-  "title": "Database course" 
+  "title": "Database course2" 
 }
