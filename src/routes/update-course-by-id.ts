@@ -3,11 +3,13 @@ import { db } from "../database/client.ts";
 import { courses } from "../database/schema.ts";
 import z from "zod";
 import { eq } from "drizzle-orm";
+import { CheckRequestJwt } from "./hooks/check-request-jwt.ts";
 
 export const updateCourseByIdRoute: FastifyPluginAsyncZod = async (server) => {
   server.patch(
     "/courses/:id",
     {
+      preHandler: [CheckRequestJwt],
       schema: {
         tags: ["Courses"],
         summary: "Update a course by ID",

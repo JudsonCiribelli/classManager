@@ -2,11 +2,13 @@ import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { db } from "../database/client.ts";
 import { courses } from "../database/schema.ts";
 import z from "zod";
+import { CheckRequestJwt } from "./hooks/check-request-jwt.ts";
 
 export const createCourseRoute: FastifyPluginAsyncZod = async (server) => {
   server.post(
     "/courses",
     {
+      preHandler: [CheckRequestJwt],
       schema: {
         tags: ["courses"],
         summary: "Create a new course",

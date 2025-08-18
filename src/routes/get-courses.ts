@@ -3,11 +3,13 @@ import { db } from "../database/client.ts";
 import { courses, enrollments } from "../database/schema.ts";
 import z from "zod";
 import { and, asc, count, eq, ilike, SQL } from "drizzle-orm";
+import { CheckRequestJwt } from "./hooks/check-request-jwt.ts";
 
 export const getCourseRoute: FastifyPluginAsyncZod = async (server) => {
   server.get(
     "/courses",
     {
+      preHandler: [CheckRequestJwt],
       schema: {
         tags: ["Courses"],
         summary: "Get all courses",

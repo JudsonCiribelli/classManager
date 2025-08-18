@@ -9,7 +9,8 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/courses
 ###
-GET http://localhost:3000/courses/2287f75d-b438-47ff-b29a-409f332b5ffe
+GET http://localhost:3000/courses/2f3f59dd-ce5c-4022-879e-bc69f0739a92
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZjEyMDEwMy1mMzIzLTRjZTAtYjFlNC04ZjYwMmNiNDIyNjYiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc1NTUzOTEyOX0.7Ht_1wMyh-xS1WmFh1zoIahnB0sIl-NkzqzwYpkhu_8
 ###
 DELETE http://localhost:3000/courses/66834c18-9544-4857-96bd-0ba9c29409e5
 ###
