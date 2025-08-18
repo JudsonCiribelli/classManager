@@ -13,6 +13,7 @@ import { deleteCourseByIdRoute } from "./routes/delete-course-by-id.ts";
 import scalarAPIReference from "@scalar/fastify-api-reference";
 
 import { updateCourseByIdRoute } from "./routes/update-course-by-id.ts";
+import { loginRoute } from "./routes/login.ts";
 
 const server = fastify({
   logger: {
@@ -53,5 +54,6 @@ server.register(getCourseByIdRoute);
 server.register(createCourseRoute);
 server.register(deleteCourseByIdRoute);
 server.register(updateCourseByIdRoute);
+server.register(loginRoute);
 
 export { server };
