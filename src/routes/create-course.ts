@@ -3,12 +3,14 @@ import { db } from "../database/client.ts";
 import { courses } from "../database/schema.ts";
 import z from "zod";
 import { CheckRequestJwt } from "./hooks/check-request-jwt.ts";
+import { checkUserRole } from "./hooks/check-user-role.ts";
+import { getAuthenticatedUserFromRequest } from "../utils/get-authenticated-user.ts";
 
 export const createCourseRoute: FastifyPluginAsyncZod = async (server) => {
   server.post(
     "/courses",
     {
-      preHandler: [CheckRequestJwt],
+      preHandler: [CheckRequestJwt, checkUserRole("manager")],
       schema: {
         tags: ["courses"],
         summary: "Create a new course",
@@ -25,6 +27,7 @@ export const createCourseRoute: FastifyPluginAsyncZod = async (server) => {
       },
     },
     async (request, reply) => {
+      const user = getAuthenticatedUserFromRequest(request);
       const courseTitle = request.body.title;
 
       const result = await db

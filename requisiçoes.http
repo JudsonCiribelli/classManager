@@ -1,13 +1,15 @@
 POST http://localhost:3000/courses
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZjEyMDEwMy1mMzIzLTRjZTAtYjFlNC04ZjYwMmNiNDIyNjYiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc1NTU0MDM5MX0.LqHJNOAFs909VfMwJbJ6ZYXYj-mjJPvhUEDa5mvrUsM
 
 {
-  "title": "",
-  "description": ""
+  "title": "course of nextJs"  
 }
 
 ###
 GET http://localhost:3000/courses
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZjEyMDEwMy1mMzIzLTRjZTAtYjFlNC04ZjYwMmNiNDIyNjYiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc1NTU0MDM5MX0.LqHJNOAFs909VfMwJbJ6ZYXYj-mjJPvhUEDa5mvrUsM
+
 ###
 GET http://localhost:3000/courses/2f3f59dd-ce5c-4022-879e-bc69f0739a92
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxZjEyMDEwMy1mMzIzLTRjZTAtYjFlNC04ZjYwMmNiNDIyNjYiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc1NTUzOTEyOX0.7Ht_1wMyh-xS1WmFh1zoIahnB0sIl-NkzqzwYpkhu_8
