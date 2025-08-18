@@ -3,15 +3,18 @@ import { db } from "../../database/client.ts";
 import { users } from "../../database/schema.ts";
 import { hash } from "argon2";
 import { randomUUID } from "node:crypto";
+import jwt from "jsonwebtoken";
 
-export const MakeUser = async () => {
+export const MakeUser = async (role?: "manager" | "student") => {
   const passwordBeforeHash = randomUUID();
+
   const result = await db
     .insert(users)
     .values({
       name: faker.person.fullName(),
       email: faker.internet.email(),
       password: await hash(passwordBeforeHash),
+      role,
     })
     .returning();
 
@@ -20,3 +23,13 @@ export const MakeUser = async () => {
     passwordBeforeHash,
   };
 };
+
+export async function makeAuthenticatedUser(role: "manager" | "student") {
+  const { user } = await MakeUser(role);
+
+  const token = jwt.sign(
+    { sub: user.id, role: user.role },
+    process.env.JWT_SECRET!
+  );
+  return { user, token };
+}

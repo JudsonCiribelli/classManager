@@ -18,6 +18,6 @@ test("login", async () => {
 
   expect(response.status).toBe(200);
   expect(response.body).toEqual({
-    message: "Usuario logado com sucesso!",
+    token: expect.any(String),
   });
 });
