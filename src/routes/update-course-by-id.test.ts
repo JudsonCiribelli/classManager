@@ -11,7 +11,7 @@ test("Update course a course by id", async () => {
   const response = await request(server.server)
     .patch(`/courses/${course.id}`)
     .set("Content-Type", "application/json")
-    .send({ title: "Versão atualizada 4.0 teste" });
+    .send({ title: course.title });
 
   expect(response.status).toBe(200);
   expect(response.body).toEqual({
