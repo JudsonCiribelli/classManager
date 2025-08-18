@@ -14,51 +14,40 @@ export const updateCourseByIdRoute: FastifyPluginAsyncZod = async (server) => {
         description: "Updates a course with the specified ID.",
         params: z.object({
           id: z.uuid(),
-          title: z
-            .string()
-            .nonempty()
-            .nonempty({ message: "Title cannot be empty" }),
-          description: z
-            .string()
-            .nonempty({ message: "Description cannot be empty" }),
         }),
+        body: z
+          .object({
+            title: z.string().nonempty({ message: "Title cannot be empty" }),
+          })
+          .partial(),
         response: {
           200: z.object({
             course: z.object({
               id: z.uuid(),
               title: z.string(),
-              description: z.string(),
             }),
           }),
-          400: z.null().describe("Bad Request").describe("Invalid input data"),
+          404: z.object({
+            message: z.string(),
+          }),
         },
       },
     },
     async (request, reply) => {
-      const params = request.params;
-      const courseTitle = params.title;
-      const courseDescription = params.description;
-      const id = params.id;
+      const { title: courseTitle } = request.body;
+      const id = request.params.id;
 
-      const course = await db.select().from(courses).where(eq(courses.id, id));
-
-      if (courseTitle) {
-        course[0].title = courseTitle;
-      }
-
-      if (courseDescription) {
-        course[0].description = courseDescription;
-      }
-
-      await db
+      const [updatedCourse] = await db
         .update(courses)
-        .set({
-          title: course[0].title,
-          description: course[0].description,
-        })
-        .where(eq(courses.id, id));
+        .set({ title: courseTitle })
+        .where(eq(courses.id, id))
+        .returning();
 
-      return reply.send({ course: course[0] });
+      if (!updatedCourse) {
+        return reply.status(404).send({ message: "Course not found!" });
+      }
+
+      return reply.status(200).send({ course: updatedCourse });
     }
   );
 };

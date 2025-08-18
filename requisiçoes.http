@@ -9,14 +9,14 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/courses
 ###
-GET http://localhost:3000/courses/56251c33-2188-400a-a27d-1832251ed40c
+GET http://localhost:3000/courses/2287f75d-b438-47ff-b29a-409f332b5ffe
 ###
 DELETE http://localhost:3000/courses/66834c18-9544-4857-96bd-0ba9c29409e5
 ###
-PATCH  http://localhost:3000/courses/56251c33-2188-400a-a27d-1832251ed40c
+
+PATCH  http://localhost:3000/courses/2287f75d-b438-47ff-b29a-409f332b5ffe
 Content-Type: application/json
 
 {
-  "title": "Course of sofware engeniering",
-  "description": "this is a course of sofware engeniering"
+  "title": "Database course" 
 }
